@@ -1,3 +1,6 @@
 this file was created with the develop branch
 - updated develop branch
     - updated in the newfeature1 branch
+    - updated in the newfeature2 branch
+    - another update from newfeature2 branch
+    - last update from newfeature2 branch
