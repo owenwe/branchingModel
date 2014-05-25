@@ -1,4 +1,53 @@
-This is a standard project git branching model.
+This is a standard project git branching model as described on
+http://nvie.com/posts/a-successful-git-branching-model/
 
-- initial commit
-- should now have a develop, newfeature1, and newfeature2 branch
+master (0.1)  ----------------
+hotfix        ----------------
+release       ----------------
+develop       ----------------
+new feature 1 ----------------
+new feature 2 ----------------
+
+
+Creating a feature branch
+$ git checkout -b myfeature develop
+
+
+Incorporating a finished feature on develop
+$ git checkout develop
+$ git merge --no-ff myfeature
+$ git branch -d myfeature
+$ git push origin develop
+
+
+Creating a release branch
+$ git checkout -b release-1.0 develop
+$ git commit -a -m "version number to 1.0"
+
+
+Finishing a release branch
+$ git checkout master
+$ git merge --no-ff release-1.0
+$ git tag -a 1.0
+-- to keep the changes made in the release branch, merge those back into develop
+$ git checkout develop
+$ git merge --no-ff release-1.0
+$ git branch -d release-1.0
+
+
+Hotfix branches
+$ git checkout -b hotfix-1.1 master
+-- fix bug
+$ git commit -m "Fixed severe production problem"
+
+
+Finishing a hotfix branch
+$ git checkout master
+$ git merge --no-ff hotfix-1.1
+$ git tag -a 1.1
+-- include the bugfix in develop too
+$ git checkout develop
+$ git merge --no-ff hotfix-1.1
+(when a release branch exists, the hotfix changes need to be merged into it, instead of develop
+if work in develop immediately requires this bugfix, it can be merged into develop)
+$ git branch -d hotfix-1.1
